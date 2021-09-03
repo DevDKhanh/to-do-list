@@ -20,24 +20,11 @@ export default class List extends Component {
 	}
 
 	render() {
-		const { list, sortStatus, indexPage, skip } = this.props;
-		const minIndex = indexPage * skip - skip;
-		const maxIndex = indexPage * skip;
-		const offSort = sortStatus === 'all';
-		const listSort = {
-			done: true,
-			no: false,
-		};
-		const filterList = list.filter(
-			(value, index) =>
-				(!offSort ? value.isDone === listSort[sortStatus] : true) &&
-				index >= minIndex &&
-				index < maxIndex,
-		);
+		const { list } = this.props;
 
 		const htmls =
-			filterList.length > 0 ? (
-				filterList.map(value => {
+			list.length > 0 ? (
+				list.map(value => {
 					return (
 						<Task
 							key={value.id}
