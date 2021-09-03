@@ -1,0 +1,51 @@
+.list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #fff;
+	padding: 0.7rem;
+	width: 100%;
+	font-size: 1.4rem;
+	border-radius: 0.3rem;
+	margin-bottom: 1rem;
+}
+
+.list-item .check input {
+	cursor: pointer;
+}
+
+.list-item .text {
+	flex: 1;
+	margin-left: 10px;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-word;
+}
+
+.list-item.done {
+	background-color: #4c00ff;
+	text-decoration: line-through;
+	color: #fff;
+}
+
+.btn-del {
+	cursor: pointer;
+	opacity: 0;
+	transition: 0.2s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.list-item:hover .btn-del {
+	opacity: 1;
+}
+
+@media screen and (max-width: 767px) {
+	.btn-del {
+		opacity: 1;
+	}
+}

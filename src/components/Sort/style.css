@@ -1,0 +1,29 @@
+.sort {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.sort-item {
+	padding-top: 1rem;
+}
+
+.sort-item label {
+	display: block;
+	text-align: center;
+	color: #fff;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.sort-item select {
+	cursor: pointer;
+	width: 100%;
+	padding: 0.5rem;
+	border: none;
+	border-radius: 0.3rem;
+	background-color: #fff;
+	font-weight: 600;
+	color: rgb(54, 54, 54);
+	display: block;
+}

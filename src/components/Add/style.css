@@ -1,0 +1,44 @@
+.add {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.input-add input[type='text'] {
+	padding: 0.8rem 1rem;
+	font-size: 1.2rem;
+	width: 450px;
+	border: none;
+	height: 3rem;
+	display: block;
+	border-radius: 0.3rem 0 0 0.3rem;
+}
+
+.input-add input[type='text']::-webkit-input-placeholder {
+	color: purple;
+}
+
+.input-add input[type='text']::-moz-input-placeholder {
+	color: purple;
+}
+
+#add-task {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.7rem 1rem;
+	font-size: 1.5rem;
+	height: 3rem;
+	border: none;
+	border-radius: 0 0.3rem 0.3rem 0;
+}
+
+#add-task:hover {
+	opacity: 0.8;
+}
+
+@media screen and (max-width: 767px) {
+	.input-add input[type='text'] {
+		width: 100%;
+	}
+}

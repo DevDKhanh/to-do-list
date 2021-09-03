@@ -1,25 +1,114 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Add from './components/Add/Add';
+import List from './components/List/List';
+import Sort from './components/Sort/Sort';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+	constructor(props) {
+		super(props);
 
-export default App;
+		this.state = {
+			list: [],
+			sortStatus: 'all',
+			indexPage: 1,
+			LOCAL_NAME: 'my-list',
+			msg: '',
+		};
+	}
+
+	componentDidMount() {
+		this.setState({ list: this.getItems() || [] });
+	}
+
+	getItems() {
+		const list = localStorage.getItem(this.state.LOCAL_NAME);
+		if (list) {
+			return JSON.parse(list);
+		} else {
+			localStorage.setItem(this.state.LOCAL_NAME, []);
+			return [];
+		}
+	}
+
+	handleAdd = item => {
+		if (item.title.trim() !== '') {
+			const newList = [item, ...this.state.list];
+
+			this.setState({ list: [item, ...this.state.list], msg: '' });
+			localStorage.setItem(
+				this.state.LOCAL_NAME,
+				JSON.stringify(newList),
+			);
+		} else {
+			this.setState({ msg: `Vui lòng không bỏ trống!` });
+		}
+	};
+
+	handleChangeStatus = id => {
+		const newList = this.state.list.map(item => {
+			if (item.id === id) {
+				item.isDone = !item.isDone;
+			}
+
+			this.setState({ msg: '' });
+			return item;
+		});
+
+		this.setState({ list: newList });
+		localStorage.setItem(this.state.LOCAL_NAME, JSON.stringify(newList));
+	};
+
+	handleDelete = id => {
+		const newList = this.state.list.filter(item => item.id !== id);
+
+		this.setState({ list: newList, msg: '' });
+		localStorage.setItem(this.state.LOCAL_NAME, JSON.stringify(newList));
+	};
+
+	handeSortStatus = value => {
+		this.setState({ sortStatus: value });
+	};
+
+	handeSortPage = value => {
+		this.setState({ indexPage: Number(value) });
+	};
+
+	render() {
+		const skip = 5; //Skip item default = 5;
+		const coutItem = this.state.list.length;
+		const numberPage = Math.ceil(coutItem / skip); //Number Item per one page
+
+		return (
+			<div className="app">
+				<div className="title">To Do List</div>
+				<div className="table-app">
+					<Add handleAdd={this.handleAdd} />
+					{coutItem <= 0 ? null : (
+						<Sort
+							handeSortStatus={this.handeSortStatus}
+							handeSortPage={this.handeSortPage}
+							indexPage={this.state.indexPage}
+							countItem={numberPage}
+						/>
+					)}
+					<div
+						className={`msg animate__animated  
+						${this.state.msg !== '' ? 'animate__bounceIn' : ''}`}
+					>
+						{this.state.msg}
+					</div>
+					<List
+						sortStatus={this.state.sortStatus}
+						skip={skip}
+						indexPage={this.state.indexPage}
+						handleChangeStatus={this.handleChangeStatus}
+						handleDelete={this.handleDelete}
+						list={this.state.list}
+					/>
+				</div>
+			</div>
+		);
+	}
+}
