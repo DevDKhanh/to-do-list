@@ -106,7 +106,7 @@ export default class App extends Component {
 				<div className="title">To Do List</div>
 				<div className="table-app">
 					<Add handleAdd={this.handleAdd} />
-					{coutItem <= 0 ? null : (
+					{this.state.list.length <= 0 ? null : (
 						<Sort
 							handeSortStatus={this.handeSortStatus}
 							handeSortPage={this.handeSortPage}
